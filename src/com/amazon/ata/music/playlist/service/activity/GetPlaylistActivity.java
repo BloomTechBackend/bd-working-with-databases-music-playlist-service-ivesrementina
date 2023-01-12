@@ -47,6 +47,7 @@ public class GetPlaylistActivity implements RequestHandler<GetPlaylistRequest, G
         Playlist playlist = playlistDao.getPlaylist(requestedId);
         PlaylistModel playlistModel = new ModelConverter().toPlaylistModel(playlist);
 
+
         return GetPlaylistResult.builder()
                 .withPlaylist(playlistModel)
                 .build();

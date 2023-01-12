@@ -2,10 +2,7 @@ package com.amazon.ata.music.playlist.service.dynamodb.models;
 
 import com.amazon.ata.music.playlist.service.converters.AlbumTrackLinkedListConverter;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,8 +12,13 @@ import java.util.List;
  */
 @DynamoDBTable(tableName = "playlists")
 public class Playlist {
+    private String name;
     private String id;
+    private String CustomerId;
     private List<AlbumTrack> songList;
+    private int songCount;
+    private HashSet<String> Tags;
+
 
     @DynamoDBHashKey(attributeName = "id")
     public String getId() {
@@ -37,16 +39,36 @@ public class Playlist {
     public void setSongList(List<AlbumTrack> songList) {
         this.songList = songList;
     }
-
-    public void setName(String Name) {
+    @DynamoDBRangeKey(attributeName = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setCustomerId(String Id) {
+    public void setName(String name) {
+        this.name = name;
+    }
+    @DynamoDBAttribute(attributeName = "CustomerId")
+    public String getCustomerId() {
+        return CustomerId;
     }
 
-    public void setSongCount(int SongCount) {
+    public void setCustomerId(String CustomerId) {
+        this.CustomerId = CustomerId;
+    }
+    @DynamoDBAttribute(attributeName = "song_count")
+    public int getSongCount() {
+        return songCount;
     }
 
-    public void setTags(HashSet<String> newHashSet) {
+    public void setSongCount(int songCount) {
+        this.songCount = songCount;
+    }
+    @DynamoDBAttribute(attributeName = "Tags")
+    public HashSet<String> getTags() {
+        return Tags;
+    }
+
+    public void setTags(HashSet<String> Tags) {
+        this.Tags = Tags;
     }
 }
