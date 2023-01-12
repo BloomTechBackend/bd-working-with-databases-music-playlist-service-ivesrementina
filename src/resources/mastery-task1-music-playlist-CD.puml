@@ -21,4 +21,34 @@ class AlbumTrack {
 albumName : String
 songTitle : String
 }
+class AlbumTrackNotFoundException {
+}
+class InvalidAttributeValueException {
+}
+class PlaylistNotFoundException {
+}
+class AlbumTrackDao {
+- dynamoDbMapper : DynamoDBMapper
+}
+class PlaylistDao {
+- dynamoDbMapper : DynamoDBMapper
+
++getPlaylist(String) : Playlist
+}
+class Playlist {
+- @DynamoDBHashKey id : String
+name : String
+customerId : String
+songCount : Integer
+tags : Set<String>
+songList : List<AlbumTrack>
+}
+Playlist *-- AlbumTrack
+AddSongToPlaylistActivity *-- AlbumTrack
+AddSongToPlaylistActivity *-- AlbumTrackDao
+CreatePlaylistActivity *-- PlaylistDao
+AddSongToPlaylistActivity *-- PlaylistDao
+GetPlaylistActivity *-- PlaylistDao
+GetPlaylistSongsActivity *-- PlaylistDao
+UpdatePlaylistActivity *-- PlaylistDao
 @enduml

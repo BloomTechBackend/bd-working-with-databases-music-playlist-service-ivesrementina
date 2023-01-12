@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a record in the playlists table.
@@ -14,10 +15,10 @@ import java.util.List;
 public class Playlist {
     private String name;
     private String id;
-    private String CustomerId;
+    private String customerId;
     private List<AlbumTrack> songList;
-    private int songCount;
-    private HashSet<String> Tags;
+    private Integer songCount;
+    private Set<String> tags;
 
 
     @DynamoDBHashKey(attributeName = "id")
@@ -49,26 +50,26 @@ public class Playlist {
     }
     @DynamoDBAttribute(attributeName = "CustomerId")
     public String getCustomerId() {
-        return CustomerId;
+        return customerId;
     }
 
     public void setCustomerId(String CustomerId) {
-        this.CustomerId = CustomerId;
+        this.customerId = CustomerId;
     }
     @DynamoDBAttribute(attributeName = "song_count")
-    public int getSongCount() {
+    public Integer getSongCount() {
         return songCount;
     }
 
-    public void setSongCount(int songCount) {
+    public void setSongCount(Integer songCount) {
         this.songCount = songCount;
     }
     @DynamoDBAttribute(attributeName = "Tags")
-    public HashSet<String> getTags() {
-        return Tags;
+    public Set<String> getTags() {
+        return tags;
     }
 
     public void setTags(HashSet<String> Tags) {
-        this.Tags = Tags;
+        this.tags = Tags;
     }
 }
