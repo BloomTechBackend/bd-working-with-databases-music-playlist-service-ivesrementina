@@ -21,9 +21,13 @@ class AlbumTrack {
 albumName : String
 songTitle : String
 }
+class RuntimeException {
+}
 class AlbumTrackNotFoundException {
 }
 class InvalidAttributeValueException {
+}
+class InvalidAttributeChangeException {
 }
 class PlaylistNotFoundException {
 }
@@ -51,4 +55,8 @@ AddSongToPlaylistActivity *-- PlaylistDao
 GetPlaylistActivity *-- PlaylistDao
 GetPlaylistSongsActivity *-- PlaylistDao
 UpdatePlaylistActivity *-- PlaylistDao
+PlaylistNotFoundException <|-- InvalidAttributeValueException
+PlaylistNotFoundException <|-- InvalidAttributeChangeException
+RuntimeException <|-- PlaylistNotFoundException
+RuntimeException <|--AlbumTrackNotFoundException
 @enduml
