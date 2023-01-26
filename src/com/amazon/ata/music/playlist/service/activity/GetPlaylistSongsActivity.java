@@ -1,5 +1,10 @@
 package com.amazon.ata.music.playlist.service.activity;
 
+import com.amazon.ata.music.playlist.service.converters.ModelConverter;
+import com.amazon.ata.music.playlist.service.dynamodb.models.AlbumTrack;
+import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
+import com.amazon.ata.music.playlist.service.exceptions.PlaylistNotFoundException;
+import com.amazon.ata.music.playlist.service.models.SongOrder;
 import com.amazon.ata.music.playlist.service.models.requests.GetPlaylistSongsRequest;
 import com.amazon.ata.music.playlist.service.models.results.GetPlaylistSongsResult;
 import com.amazon.ata.music.playlist.service.models.SongModel;
@@ -12,6 +17,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Implementation of the GetPlaylistSongsActivity for the MusicPlaylistService's GetPlaylistSongs API.
@@ -46,8 +53,24 @@ public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongs
     public GetPlaylistSongsResult handleRequest(final GetPlaylistSongsRequest getPlaylistSongsRequest, Context context) {
         log.info("Received GetPlaylistSongsRequest {}", getPlaylistSongsRequest);
 
+        Playlist playlist = playlistDao.getPlaylist(getPlaylistSongsRequest.getId());
+        SongOrder songOrder = getPlaylistSongsRequest.getOrder();
+        List<AlbumTrack> albumTracks = playlist.getSongList();
+
+        if (playlist == null) {
+            throw new PlaylistNotFoundException("Playlist does not exist");
+        }
+
+        if (songOrder == null){
+        } else if (songOrder == SongOrder.REVERSED) {
+            Collections.reverse(albumTracks);
+        }  else if (songOrder == SongOrder.SHUFFLED) {
+            Collections.shuffle(albumTracks);
+        }
+        playlistDao.savePlaylist(playlist);
+
         return GetPlaylistSongsResult.builder()
-                .withSongList(Collections.singletonList(new SongModel()))
+                .withSongList(new ModelConverter().toSongModelList(playlist.getSongList()))
                 .build();
     }
 }
