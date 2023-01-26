@@ -51,10 +51,10 @@ public class GetPlaylistActivity implements RequestHandler<GetPlaylistRequest, G
         Playlist playlist = playlistDao.getPlaylist(requestedId);
         PlaylistModel playlistModel = new ModelConverter().toPlaylistModel(playlist);
 
-        if (playlist == null){
+        if (playlist == null) {
             throw new PlaylistNotFoundException("Playlist does not exist");
         }
-        
+
         return GetPlaylistResult.builder()
                 .withPlaylist(playlistModel)
                 .build();

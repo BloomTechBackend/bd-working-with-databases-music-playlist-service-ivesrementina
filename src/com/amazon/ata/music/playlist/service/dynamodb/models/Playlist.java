@@ -69,7 +69,7 @@ public class Playlist {
         return tags;
     }
 
-    public void setTags(HashSet<String> Tags) {
+    public void setTags(Set<String> Tags) {
         this.tags = Tags;
     }
 }

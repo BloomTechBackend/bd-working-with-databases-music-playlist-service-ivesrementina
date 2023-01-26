@@ -5,9 +5,7 @@ import com.amazon.ata.music.playlist.service.models.PlaylistModel;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
 import com.amazon.ata.music.playlist.service.models.SongModel;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class ModelConverter {
     /**
@@ -26,7 +24,7 @@ public class ModelConverter {
             .build();
     }
 
-    public List<SongModel> toSongModel(List<AlbumTrack> albumTracks) {
+    public List<SongModel> toSongModelList(List<AlbumTrack> albumTracks) {
         List<SongModel> songModelList = new LinkedList<>();
         for (AlbumTrack albumTrack : albumTracks) {
             songModelList.add(
